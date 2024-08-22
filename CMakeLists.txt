@@ -4,9 +4,11 @@ project(base64)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(B64_EXTENDED_BUILD, "Enable extended build" OFF)
+# default off so broken toolchains, like esp-idf, don't look at targets
+# they can't build
+option(B64_BUILD_ALL, "Enable all build target definitions" OFF)
 
-if (B64_EXTENDED_BUILD)
+if (B64_BUILD_ALL)
   if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE RelWithDebInfo)
   endif()
@@ -77,4 +79,4 @@ if (B64_EXTENDED_BUILD)
   target_link_libraries(base64_tests PRIVATE GTest::gtest GTest::gtest_main)
 
   add_test(NAME base64_tests COMMAND base64_tests)
-endif()
+endif() # B64_BUILD_ALL
